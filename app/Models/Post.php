@@ -11,11 +11,20 @@ class Post extends Model
     use Searchable;
     use HasFactory;
 
-    protected $with = [
-        'category'
+    protected $fillable = [
+        'title',
+        'slug',
+        'content',
+        'published',
+        'category_id',
     ];
 
-    public function searchable(): bool
+    // protected $with = [
+    //     'category'
+    // ];
+
+    // Conditionally Searchable Model Instances
+    public function shouldBeSearchable(): bool
     {
         return $this->published || $this->category->searchable;
     }
@@ -37,13 +46,5 @@ class Post extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
-    }
-
-    public static function getSearchFilterAttributes(): array
-    {
-        return [
-            'category.name',
-            'category.slug',
-        ];
     }
 }
