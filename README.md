@@ -52,12 +52,24 @@ meilisearch
 meilisearch --master-key joVaZyaMWrqrO8OXEyTPxpvE8kY_gjLf6FTq1t9chR8
 ```
 
+## Import Initial Post Data
+
+```
+php artisan scout:import "App\Models\Post"
+```
+
+## Making Sure Scout Settings Updated
+
+```
+php artisan scout:sync-index-settings
+```
+
 ## Search Example 
 
 Request:
 
 ```
-GET http://localhost:8000/api/search?query=dolor&order_by=title,desc
+GET http://localhost:8000/api/search?query=dolor&order_by=category_id,desc
 ```
 
 Response:
