@@ -23,28 +23,28 @@ class Post extends Model
     //     'category'
     // ];
 
-    // Conditionally Searchable Model Instances
-    public function shouldBeSearchable(): bool
-    {
-        return $this->published || $this->category->searchable;
-    }
-
-    public function toSearchableArray(): array
-    {
-        return [
-            'title' => $this->title,
-            'slug' => $this->slug,
-            'content' => $this->content,
-            'category_id' => $this->category_id,
-            'category' => [
-                'name' => $this->category->name,
-                'slug' => $this->category->slug,
-            ]
-        ];
-    }
-
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+    
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => (int) $this->title,
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'content' => $this->content,
+            'published' => (bool) $this->published,
+            'category_id' => (int) $this->category_id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
+    }
+    
+    // Conditionally Searchable Model Instances
+    public function shouldBeSearchable(): bool
+    {
+        return $this->published;
     }
 }

@@ -24,23 +24,6 @@ class CategoryFactory extends Factory
             'slug' => Str::slug(
                 title: $name,
             ),
-            'searchable' => $this->faker->boolean(
-                chanceOfGettingTrue: 85,
-            ),
         ];
-    }
-
-    public function searchable(): static
-    {
-        return $this->state(fn (array $attributes): array => [
-            'searchable' => true,
-        ]);
-    }
- 
-    public function nonsearchable(): static
-    {
-        return $this->state(fn (array $attributes): array => [
-            'searchable' => false,
-        ]);
     }
 }

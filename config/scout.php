@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Post;
+
 return [
 
     /*
@@ -131,11 +133,11 @@ return [
 
     'meilisearch' => [
         'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
-        'key' => env('MEILISEARCH_KEY'),
+        'key' => env('MEILISEARCH_KEY', null),
         'index-settings' => [
-            'posts' => [
+            Post::class => [
                 'filterableAttributes'=> ['id', 'category_id'],
-                'sortableAttributes' => ['title', 'created_at', 'updated_at'],
+                'sortableAttributes' => ['title', 'category_id', 'created_at', 'updated_at'],
             ],
         ],
     ],

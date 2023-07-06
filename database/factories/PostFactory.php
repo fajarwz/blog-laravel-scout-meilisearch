@@ -32,18 +32,4 @@ class PostFactory extends Factory
             'category_id' => Category::factory(),
         ];
     }
- 
-    public function published(): static
-    {
-        return $this->state(fn (array $attributes): array => [
-            'published' => true,
-        ]);
-    }
- 
-    public function draft(): static
-    {
-        return $this->state(fn (array $attributes): array => [
-            'published' => false,
-        ]);
-    }
 }

@@ -11,33 +11,33 @@ class SearchController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $post = Post::search(trim($request->get('search')) ?? '', 
-            function(Indexes $meiliSearch, string $query, array $options) use ($request) {
-                if ($request->get('order_by')) {
-                    $orderBy = explode(',', $request->order_by);
-                    $options['sort'] = [$orderBy[0].':'.($orderBy[1] ?? 'asc')];
-                }
-                if ($request->get('category_id')) {
-                    $options['filter'] = 'category_id = "'.$request->category_id.'"';
-                }
+        // $post = Post::search(trim($request->get('query')) ?? '', 
+        //     function(Indexes $meiliSearch, string $query, array $options) use ($request) {
+        //         if ($request->has('order_by')) {
+        //             $orderBy = explode(',', $request->order_by);
+        //             $options['sort'] = [$orderBy[0].':'.($orderBy[1] ?? 'asc')];
+        //         }
+        //         if ($request->has('category_id')) {
+        //             $options['filter'] = 'category_id = "'.$request->category_id.'"';
+        //         }
 
-                return $meiliSearch->search($query, $options);
-            })
-            ->query(fn (Builder $query) => $query->with('category'));
+        //         return $meiliSearch->search($query, $options);
+        //     });
 
-        // $post = Post::search(trim($request->get('search')) ?? '');
+        $post = Post::search(trim($request->get('query')) ?? '');
 
-        // if ($request->get('category_id')) {
-        //     $post->where('category_id', $request->get('category_id'));
-        // }
+        if ($request->has('category_id')) {
+            $post->where('category_id', $request->get('category_id'));
+        }
 
-        // if ($request->get('order_by')) {
-        //     $orderBy = explode(',', $request->get('order_by'));
-        //     $post->orderBy($orderBy[0], $orderBy[1] ?? 'asc');
-        // }
+        if ($request->has('order_by')) {
+            $orderBy = explode(',', $request->get('order_by'));
+            $post->orderBy($orderBy[0], $orderBy[1] ?? 'asc');
+        }
 
         return response()->json([
-            'data' => $post->get(),
+            'data' => $post->query(fn (Builder $query) => $query->with('category'))
+                ->paginate()->withQueryString(),
             'status' => 200,
         ]);
     }

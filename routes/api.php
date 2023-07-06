@@ -20,9 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get(
-    'search',
-    SearchController::class
-)->name('search');
+Route::get('search', SearchController::class)->name('search');
 
 Route::resource('posts', PostController::class)->only(['store']);

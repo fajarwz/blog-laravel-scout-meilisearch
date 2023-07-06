@@ -12,7 +12,7 @@ class PostController extends Controller
     {
         $post = Post::create([
             'title' => $request->title,
-            'slug' => Str::slug($request->title , '-'),
+            'slug' => Str::slug($request->title , '-') . '-' . time(),
             'content' => $request->content,
             'published' => $request->published,
             'category_id' => $request->category_id,
