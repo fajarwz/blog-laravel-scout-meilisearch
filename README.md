@@ -41,6 +41,7 @@ Download the Meilisearch app
 
 ```
 # Install Meilisearch
+# Windows user: you can use CMD to run this command
 curl -L https://install.meilisearch.com | sh
 
 # Launch Meilisearch without key
@@ -101,6 +102,11 @@ Response:
     "status": 200
 }
 ```
+
+## Ordering Issue
+
+Please check the following article:\
+https://fajarwz.com/blog/simple-and-advanced-search-with-laravel-scout-and-meilisearch/#hey-why-isnt-the-string-ordering-in-the-expected-order
 
 ## Create New Post Example
 
